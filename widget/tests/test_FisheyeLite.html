@@ -1,10 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML>
 <html>
-    <head>
+	<head>
 	<title>A responsive Fisheye-like FisheyeLite widget | The Dojo Toolkit</title>
 	<style type="text/css">
 
-	    body, html { margin:0; padding:0; width:100%;
+		body, html { margin:0; padding:0; width:100%;
 			font-family:Arial,sans-serif;
 		}
 		a { letter-spacing:0.1em; }
@@ -58,115 +58,112 @@
 			top:0;
 		}
 	</style>
-	<script type="text/javascript">
-		var djConfig = { isDebug:true, parseOnLoad:true };
-	</script>
-	<script type="text/javascript" src="../../../dojo/dojo.js" data-dojo-config="async:true"></script>
-	<script type="text/javascript">
-        require([
-            "dijit/registry",
-            "dojox/widget/FisheyeLite",
-            "dojo/parser",
-            "dojo/query",
-            "dojo/fx/easing",
-            "dojo/on",
-            "dojo/_base/Deferred",
-            "dojo/domReady!"
-        ], function(registry, FisheyeLite, parser, query, easing, on, Deferred){
+	<script src="../../../dojo/dojo.js" data-dojo-config="async:true, isDebug: true"></script>
+	<script>
+		require([
+			"dijit/registry",
+			"dojox/widget/FisheyeLite",
+			"dojo/parser",
+			"dojo/query",
+			"dojo/fx/easing",
+			"dojo/on",
+			"dojo/when",
+			"dojo/domReady!"
+		], function(registry, FisheyeLite, parser, query, easing, on, when){
 
-    		var beenDestroyed = false;
-    		var hasInit = false;
-    		var init = function(e){
+			var beenDestroyed = false;
+			var hasInit = false;
+			var init = function(e){
 			
-    			if(e && !beenDestroyed){ return; }
-    			e && e.preventDefault();
+				if(e && !beenDestroyed){ return; }
+				e && e.preventDefault();
 			
-    			// turn li's in this page into fisheye items, presumtiously:	
-    			query("li.bounce").instantiate(dojox.widget.FisheyeLite,{});
+				// turn li's in this page into fisheye items, presumtiously:	
+				query("li.bounce").instantiate(FisheyeLite,{});
 
-    			var l = query("span.line")
-    				.instantiate(dojox.widget.FisheyeLite,{
-    				// make a widget from each of the lines in the lineHeightTest
-    					properties: {
-    						fontSize:1.75
-    					},
-    					easeOut: easing.backInOut,
-    					durationOut: 500
-    				});
+				var l = query("span.line")
+					.instantiate(FisheyeLite,{
+					// make a widget from each of the lines in the lineHeightTest
+						properties: {
+							fontSize:1.75
+						},
+						easeOut: easing.backInOut,
+						durationOut: 500
+					});
 				
-    			if(!hasInit){
-    				on(l, "click",function(e){
-    				// you can still access the onclick of the real node
-    					alert(e.target.innerHTML);
-    				});
-    			}
+				if(!hasInit){
+					on(l, "click",function(e){
+					// you can still access the onclick of the real node
+						alert(e.target.innerHTML);
+					});
+				}
 
-    			var lm = query("a").instantiate(dojox.widget.FisheyeLite,{
-    				properties:{
-    					fontSize:1.15,
-    					letterSpacing:2.85
-    				}
-    			});
-    			if(!hasInit){
-    			// stop anchors from doing _anything_	
-    				on(lm, "click", function(){
-    				  //TODO: stop event  
-    				});
-    			}
+				var lm = query("a").instantiate(FisheyeLite,{
+					properties:{
+						fontSize:1.15,
+						letterSpacing:2.85
+					}
+				});
+				if(!hasInit){
+				// stop anchors from doing _anything_	
+					on(lm, "click", function(){
+					  //TODO: stop event  
+					});
+				}
 
-    			query(".imgBounce").instantiate(dojox.widget.FisheyeLite,{
-    				// all the images need a width and a height (well, not need,
-    				// but to scale you do)				
-    				properties: {
-    					height:1.75,
-    					width:1.75
-    				}
-    			});
+				query(".imgBounce").instantiate(FisheyeLite,{
+					// all the images need a width and a height (well, not need,
+					// but to scale you do)				
+					properties: {
+						height:1.75,
+						width:1.75
+					}
+				});
 			
-    			// show the new non-numeric multiplier version of fisheyelite
-    			query(".advancedProps").instantiate(dojox.widget.FisheyeLite,{
-    				properties:{
-    					height: {
-    						end: 100
-    					}
-    				}
-    			})
+				// show the new non-numeric multiplier version of fisheyelite
+				query(".advancedProps").instantiate(FisheyeLite,{
+					properties:{
+						height: {
+							end: 100
+						}
+					}
+				})
 			
-    			// 
-    			var vv = 0;
-    			var r = registry.byClass("dojox.widget.FisheyeLite")._hash;
-    			for(var l in r){
-    				vv++;
-    			}
+				// 
+				var vv = 0;
+				var r = registry.byClass("dojox.widget.FisheyeLite")._hash;
+				for(var l in r){
+					vv++;
+				}
 			
-    			// a few in markup, mostly from the query()'ies:
-    			console.log("fisheyes on this page: ", vv);
+				// a few in markup, mostly from the query()'ies:
+				console.log("fisheyes on this page: ", vv);
 				
-    			beenDestroyed = false;
-    			hasInit = true;
-    		};
+				beenDestroyed = false;
+				hasInit = true;
+			};
 		
-    		var destroyAll = function(e){
-    			e && e.preventDefault();
-    			if(confirm("really?")){
-    				dijit.registry.filter(function(w){
-    					return w && w.declaredClass == "dojox.widget.FisheyeLite";
-    				}).forEach(function(w){
-    					w.destroy(true);
-    				});
-    				beenDestroyed = true;
-    			}
-    		};
-    		
-    		Deferred.when(parser.parse(), function(){
-			    init();
-    			query("#restore").on("click",init);
-    			query("#destroy").on("click",destroyAll);
+			var destroyAll = function(e){
+				e && e.preventDefault();
+				if(confirm("really?")){
+					registry.filter(function(w){
+						return w && w.declaredClass == "dojox.widget.FisheyeLite";
+					}).forEach(function(w){
+						w.destroy(true);
+					});
+					beenDestroyed = true;
+				}
+			};
+			
+			when(parser.parse(), function(){
+				init();
+				query("#restore").on("click",init);
+				query("#destroy").on("click",destroyAll);
 			});
 		});
 	</script>
-    </head>
-    <body class="tundra">
+	</head>
+	<body class="tundra">
 		<div id="container">
 			
 			<div id="list">
@@ -329,5 +326,5 @@
 				
 				
 		</div>	
-    </body>
+	</body>
 </html>
