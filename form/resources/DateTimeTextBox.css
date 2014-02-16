@@ -1,0 +1,35 @@
+.DateTimeTextBox {
+	background: #e0f4fc;
+	border: 1px solid #7abdcc;
+	display: block;
+	padding: 5px;
+	text-align: center;
+	width: 200px;
+}
+
+.DateTimeTextBox .calendarTime {
+	border: 1px solid olive;
+	display: none;
+	width: 182px;
+}
+
+.DateTimeTextBox .calendarTime.open {
+	display: block;
+	position: absolute;
+	z-index: 999;
+}
+
+.DateTimeTextBox .buttonTime {
+	margin-top: 2px;
+	text-align: left;
+	width: 182px;
+}
+
+.DateTimeTextBox .okButton {
+	background-color: #ffe4cf;
+	border: 1px #FFE4CF solid;
+	outline-color: #888888;
+	width: 20px;
+	font-size: 12px;
+	margin-top: 5px;
+}

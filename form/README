@@ -1,5 +1,5 @@
 -------------------------------------------------------------------------------
-dojox.form Collection
+dojox/form Collection
 -------------------------------------------------------------------------------
 Version 1.0
 Release date: 02/26/2008
@@ -11,6 +11,7 @@ Credits
 	Nathan Toone (toonetown)
 	Peter Higgins (dante)
 	Wolfram Kriesing (wolfram)
+	Dylan Schiemann (dylan)
 	Mike Wilcox (mwilcox)
 -------------------------------------------------------------------------------
 Project description
@@ -35,6 +36,9 @@ Additional Notes (Brief widget list):
 
 	* CheckedMultiSelect - an extension to dijit.form.MultiSelect which
 						uses check boxes instead of ctrl-click
+
+	* DateTimeTextBox - a dropdown that contains a dijit/Calendar and 
+	dijit/TimePicker
 
 	* DropDownSelect - an extension to dijit.form.DropDownButton which is
 						meant to mirror the html <select> drop down

@@ -1,0 +1,16 @@
+<div class="DateTime">
+	<input data-dojo-attach-event="onclick:_onOpen,onkeyup:_onOpen"
+		data-dojo-attach-point="textBoxNode">
+	<div data-dojo-attach-point="calendarTimeNode" target="${target}" class="calendarTime">
+		<div data-dojo-type="dijit/Calendar" data-dojo-attach-point="calendarWidget" id="DateTime_Calendar_${id}"></div>
+		<div data-dojo-attach-point="buttonTimeNode" class="buttonTime">
+			<div style="float: left;"><strong>Time</strong>
+				<input type="text" 	name="DateTime_TimePicker_${id}" id="DateTime_TimePicker_${id}"
+					data-dojo-type="dijit/form/TimeTextBox" required="true"
+					constraints=" {timePattern: 'hh:mm:ss a', clickableIncrement: 'T00:15:00', visibleIncrement: 'T00:15:00', visibleRange: 'T04:00:00' }"
+					style="width: 110px" data-dojo-attach-point="timeWidget" value="${time}" />
+			</div>
+			<button id="DateTime_Button_${id}" data-dojo-type="dijit/form/Button" data-dojo-attach-point="okButton" class="okButton">Ok</button>
+		</div>
+	</div>
+</div>

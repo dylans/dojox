@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+	    <meta charset="utf-8">
+		<title>Test dojox/form/DateTimeTextBox</title>
+
+		<link rel="stylesheet" id="themeStyles" href="../../../dijit/themes/claro/claro.css">
+		<link rel="stylesheet" href="../resources/DateTimeTextBox.css">
+
+		<style type="text/css">
+			@import "../../../dojo/resources/dojo.css";
+			@import "../../../dijit/tests/css/dijitTests.css";
+		</style>
+
+    	<script src="../../../dojo/dojo.js"
+        	data-dojo-config="async:1, parseOnLoad:0, transparentColor: [ 255, 255, 255 ],"></script>
+
+		<!-- do not use, only for dynamic themes -->
+		<script src="../../../dijit/tests/_testCommon.js"></script>
+	</head>
+
+	<body class="claro">
+		<h1 class="testTitle">Test DateTime Widget</h1>
+		<form id="form1" data-dojo-type="dijit/form/Form" action="" name="example" method="">
+			<div id="testNode"></div>
+			<div id="testNode2" data-dojo-type="dojox/form/DateTimeTextBox" data-dojo-props="target:'testNode2'"></div>
+		</form>
+		<script>
+			require([
+				"dojox/form/DateTimeTextBox", "dojo/dom", "dojo/on",
+				"dijit/registry", "dojo/parser", "dijit/form/Form", "dojo/domReady!"
+			], function(DateTimeTextBox, dom, on, registry, parser){
+				parser.parse();
+				var instance = new DateTimeTextBox({target:"testNode"}, "testNode");
+				instance.set("value", new Date());
+				registry.byId("form1").on("submit", function(evt) {
+					evt.preventDefault();
+				});
+				registry.byId("testNode2").set("value", new Date());
+			});
+		</script>
+	</body>
+</html>
