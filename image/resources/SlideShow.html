@@ -1,14 +1,14 @@
-<div dojoAttachPoint="outerNode" class="slideShowWrapper">
-	<div style="position:relative;" dojoAttachPoint="innerWrapper">
-		<div class="slideShowNav" dojoAttachEvent="onclick: _handleClick">
-			<div class="dijitInline slideShowTitle" dojoAttachPoint="titleNode">${title}</div>
+<div data-dojo-attach-point="outerNode" class="slideShowWrapper">
+	<div style="position:relative;" data-dojo-attach-point="innerWrapper">
+		<div class="slideShowNav" data-dojo-attach-event="click: _handleClick">
+			<div class="dijitInline slideShowTitle" data-dojo-attach-point="titleNode">${title}</div>
 		</div>
-		<div dojoAttachPoint="navNode" class="slideShowCtrl" dojoAttachEvent="onclick: _handleClick">
-			<span dojoAttachPoint="navPrev" class="slideShowCtrlPrev"></span>
-			<span dojoAttachPoint="navPlay" class="slideShowCtrlPlay"></span>
-			<span dojoAttachPoint="navNext" class="slideShowCtrlNext"></span>
+		<div data-dojo-attach-point="navNode" class="slideShowCtrl" data-dojo-attach-event="click: _handleClick">
+			<span data-dojo-attach-point="navPrev" class="slideShowCtrlPrev"></span>
+			<span data-dojo-attach-point="navPlay" class="slideShowCtrlPlay"></span>
+			<span data-dojo-attach-point="navNext" class="slideShowCtrlNext"></span>
 		</div>
-		<div dojoAttachPoint="largeNode" class="slideShowImageWrapper"></div>		
-		<div dojoAttachPoint="hiddenNode" class="slideShowHidden"></div>
+		<div data-dojo-attach-point="largeNode" class="slideShowImageWrapper"></div>
+		<div data-dojo-attach-point="hiddenNode" class="slideShowHidden"></div>
 	</div>
 </div>
