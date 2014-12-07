@@ -232,21 +232,17 @@ define([
 			var preload = this.parentWidget.preloadItems;
 			preload = (preload === true || (this.items && this.items.length <= Number(preload)));
 			if(this.items && preload){
-				console.log("a");
 				this._doLoadItems(this.items, lang.hitch(this, "onItems"));
 			}else if(this.items){
-				console.log("b");
 				this.onItems();
 			}else{
 				this._setContentAndScroll(this.onFetchStart(), true);
 				this.store.fetch({query: this.query,
 					onComplete: function(items){
-						console.log(items);
 						this.items = items;
 						this.onItems();
 					},
 					onError: function(e){
-						console.log(e);
 						this._onError("Fetch", e);
 					},
 					scope: this});
