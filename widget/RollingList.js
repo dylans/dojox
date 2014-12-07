@@ -1,5 +1,5 @@
 define([
-	"dojo/base/array",
+	"dojo/_base/array",
 	"dojo/_base/declare",
 	"dojo/_base/lang",
 	"dojo/aspect",
@@ -232,17 +232,21 @@ define([
 			var preload = this.parentWidget.preloadItems;
 			preload = (preload === true || (this.items && this.items.length <= Number(preload)));
 			if(this.items && preload){
+				console.log("a");
 				this._doLoadItems(this.items, lang.hitch(this, "onItems"));
 			}else if(this.items){
+				console.log("b");
 				this.onItems();
 			}else{
 				this._setContentAndScroll(this.onFetchStart(), true);
 				this.store.fetch({query: this.query,
 					onComplete: function(items){
+						console.log(items);
 						this.items = items;
 						this.onItems();
 					},
 					onError: function(e){
+						console.log(e);
 						this._onError("Fetch", e);
 					},
 					scope: this});
@@ -502,7 +506,7 @@ define([
 			}, this.menuNode);
 			aspect.after(menu, "onItemClick", function(/*dijit/MenuItem*/ item, /*Event*/ evt){
 				if(item.disabled){ return; }
-				evt.alreadySelected = domClass.has(item.domNode, "dojoxRollingListItemSelected");
+				evt.alreadySelected = domClass.contains(item.domNode, "dojoxRollingListItemSelected");
 				if(evt.alreadySelected &&
 					((evt.type == "keypress" && evt.charOrCode != keys.ENTER) ||
 					(evt.type == "internal"))){
@@ -598,7 +602,7 @@ define([
 			if(menu){
 				var children = this._menu.getChildren();
 				for(var i = 0, item; (item = children[i]); i++){
-					if(domClass.has(item.domNode, "dojoxRollingListItemSelected")){
+					if(domClass.contains(item.domNode, "dojoxRollingListItemSelected")){
 						return item;
 					}
 				}
@@ -804,9 +808,9 @@ define([
 						domClass.toggle(node, c + type + k, options[k]);
 					}
 					domClass.toggle(node, c + type + "FocusSelected",
-						(domClass.has(node, c + type + "Focus") && domClass.has(node, c + type + "Selected")));
+						(domClass.contains(node, c + type + "Focus") && domClass.contains(node, c + type + "Selected")));
 					domClass.toggle(node, c + type + "HoverSelected",
-						(domClass.has(node, c + type + "Hover") && domClass.has(node, c + type + "Selected")));
+						(domClass.contains(node, c + type + "Hover") && domClass.contains(node, c + type + "Selected")));
 				}
 			});
 		},
@@ -956,7 +960,7 @@ define([
 						}
 					});
 					if(!child.isLoaded){
-						conn = aspect.after(child, "onLoad", lang.hitch(this, "fx"));
+						conn = aspect.after(child, "onLoad", fx);
 					}else{
 						fx();
 					}
