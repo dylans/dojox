@@ -39,16 +39,6 @@
 	<button data-dojo-type="dijit/form/Button" id="button11">Remove Canada</button>
 	<button data-dojo-type="dijit/form/Button" id="button12">Remove Europe</button>
 
-	<script>
-		var dojoConfig = {
-			packages: [
-				{name: 'dojo', location: '/dojo'},
-				{name: 'dijit', location: '/dijit'},
-				{name: 'dojox', location: '/dojox-dylan'}
-			]
-		}
-	</script>
-
 	<!-- required: dojo.js -->
 	<script src="../../../dojo/dojo.js"
 		data-dojo-config="isDebug: 1, async: 1"></script>
@@ -98,14 +88,13 @@
 				query: {type:"continent"}
 			}, "myList");
 			myList.startup();
-			aspect.after(myList, "onChange", function(value){
-				console.log("Set Value:", value);
+			aspect.after(myList, "onChange", lang.hitch(this, function(value){
 				if(value){
 					registry.byId("clickWatch").set("value", this.store.getIdentity(value));
 				} else {
 					registry.byId("clickWatch").set("value", "None selected...");
 				}
-			});
+			}));
 			aspect.after(myList, "getPaneForItem", function(item, parentPane, children){
 				var ret = RollingList.prototype.getPaneForItem.apply(this, arguments);
 				if(!ret){

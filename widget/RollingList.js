@@ -236,17 +236,20 @@ define([
 			}else if(this.items){
 				this.onItems();
 			}else{
+				var self = this;
 				this._setContentAndScroll(this.onFetchStart(), true);
-				this.store.fetch({query: this.query,
-					onComplete: function(items){
-						this.items = items;
-						this.onItems();
-					},
+				this.store.fetch({query: self.query,
+					onComplete: lang.hitch(this, "_onComplete"),
 					onError: function(e){
-						this._onError("Fetch", e);
+						self._onError("Fetch", e);
 					},
 					scope: this});
 			}
+		},
+
+		_onComplete: function(items){
+			this.items = items;
+			this.onItems();
 		},
 
 		_hasItem: function(/* item */ item){
@@ -500,7 +503,9 @@ define([
 					}
 				}
 			}, this.menuNode);
-			aspect.after(menu, "onItemClick", function(/*dijit/MenuItem*/ item, /*Event*/ evt){
+			// TODO: Fix this so the right call signature comes through
+			aspect.after(menu, "onItemClick", lang.hitch(this, function(/*dijit/MenuItem*/ item, /*Event*/ args){
+				var item = args[0], evt = args[1];
 				if(item.disabled){ return; }
 				evt.alreadySelected = domClass.contains(item.domNode, "dojoxRollingListItemSelected");
 				if(evt.alreadySelected &&
@@ -518,7 +523,7 @@ define([
 						this.parentWidget._onExecute();
 					}
 				}
-			});
+			}));
 			if(!menu._started){
 				menu.startup();
 			}
@@ -925,10 +930,12 @@ define([
 			});
 
 			var setFromChain = lang.hitch(this, function(/*item[]*/itemChain, /*integer*/idx){
+				console.log(itemChain, idx);
 				// summary:
 				//		Sets the value of the widget at the given index in the chain - onchanges are not
 				//		fired here
 				var set = itemChain[idx];
+				console.log(set, this);
 				var child = this.getChildren()[idx];
 				var conn;
 				if(set && child){
@@ -1073,7 +1080,7 @@ define([
 					widgetItem.children = childItems;
 					this._updateClass(widgetItem.domNode, "Item", {"Expanding": true});
 					if(!widgetItem._started){
-						var c = widgetItem.on(widgetItem, "startup", function(){
+						var c = aspect.after(widgetItem, "startup", function(){
 							c.remove();
 							domStyle.set(this.arrowWrapper, "visibility", "");
 						});
