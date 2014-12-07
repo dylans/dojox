@@ -12,9 +12,9 @@ define(["dojo/_base/kernel","dojo/_base/lang", "dojo/_base/fx", "dojox/fx/_base"
 		//		- offset: {x: int, y: int} this will be added to the target position
 		//		- duration: Duration of the animation in milliseconds.
 		//		- win: a node or window object to scroll
-	
+
 		if(!args.target){ args.target = domGeom.position(args.node); }
-	
+
 		var isWindow = lang[(has("ie") ? "isObject" : "isFunction")](args["win"].scrollTo),
 			delta = { x: args.target.x, y: args.target.y }
 		;

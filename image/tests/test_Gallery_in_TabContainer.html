@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
@@ -11,75 +11,72 @@
 	<style type="text/css">
 		@import "../../../dijit/tests/css/dijitTests.css";
 	</style>
-	
-	<!-- required: dojo.js -->
-	<script type="text/javascript" src="../../../dojo/dojo.js" data-dojo-config="isDebug:true, parseOnLoad: true"></script>
 
-	<!-- do not use! only for testing dynamic themes -->
-	<script type="text/javascript" src="../../../dijit/tests/_testCommon.js"></script>
-	
-	<!-- debugging includes -->
-	<script type="text/javascript" src="../ThumbnailPicker.js"></script>
-	<script type="text/javascript" src="../SlideShow.js"></script>
-	<script type="text/javascript" src="../Gallery.js"></script>
-	<script type="text/javascript" src="../../../dojo/data/util/simpleFetch.js"></script>
-	<script type="text/javascript" src="../../data/FlickrStore.js"></script>
-	<script type="text/javascript" src="../../data/FlickrRestStore.js"></script>
-	<script type="text/javascript" src="../../../dojo/data/ItemFileReadStore.js"></script>
-
-	<script type="text/javascript">
-		dojo.require("dojox.image.Gallery");
-		dojo.require("dojox.data.FlickrRestStore");
-		dojo.require("dijit.layout.TabContainer");;
-		dojo.require("dijit.layout.ContentPane");
-		
-	</script>
 </head>
 <body class="tundra">
-	<h1 class="testTitle">dojox.image.Gallery in a TabContainer</h1>
-	
-	<div dojoType="dojox.data.FlickrRestStore" data-dojo-id="flickrStore"></div>
+	<h1 class="testTitle">dojox/image/Gallery in a TabContainer</h1>
 
-	<div dojoType="dijit.layout.TabContainer" style="width:800px;height:1000px;">
-		<script type="dojo/connect" data-dojo-event="startup">
-			// When the TabContainer has finished constructing, set the data store on each Gallery
-			dojo.forEach(["gallery1", "gallery2", "gallery3"], function(galleryId){
-				var req = {
-					query: {
-						userid: "44153025@N00",
-						apikey: "8c6803164dbc395fb7131c9d54843627",
-						sort: [
-							   {
-								attribute: "interestingness",
-								descending: true
-								}
-							   ],
-					//	tags: ["superhorse", "redbones", "beachvolleyball"],
-						tag_mode: "any"
-					},
-					count: 20
-				};
-				
-				dijit.byId(galleryId).setDataStore(flickrStore, req);
-			});
-			
-		</script>
-		
-		<div id="gallery1" dojoType="dojox.image.Gallery" imageWidth="700" imageHeight="500"
+	<div data-dojo-type="dijit/layout/TabContainer" style="width:800px;height:1000px;">
+		<div id="gallery1" data-dojo-type="dojox/image/Gallery" imageWidth="700" imageHeight="500"
 			  title="Gallery As Base Widget"
 		></div>
-		
-		<div dojoType="dijit.layout.ContentPane" title="Gallery In ContentPane">
-			
-			<div id="gallery2" dojoType="dojox.image.Gallery" imageWidth="700" imageHeight="500"></div>
-		
+
+		<div data-dojo-type="dijit/layout/ContentPane" title="Gallery In ContentPane">
+			<div id="gallery2" data-dojo-type="dojox/image/Gallery" data-dojo-props="imageWidth: 700, imageHeight: 500"></div>
 		</div>
-		
-		
-		<div id="gallery3" dojoType="dojox.image.Gallery" imageWidth="700" imageHeight="500"
-			  title="Gallery As Base Widget"
+
+		<div id="gallery3" data-dojo-type="dojox/image/Gallery"  data-dojo-props="imageWidth: 700, imageHeight: 500" title="Gallery As Base Widget"
 		></div>
 	</div>
 
+	<!-- required: dojo.js -->
+	<script src="../../../dojo/dojo.js" data-dojo-config="isDebug:1, async: 1"></script>
+
+	<!-- do not use! only for testing dynamic themes -->
+	<script src="../../../dijit/tests/_testCommon.js"></script>
+
+	<script>
+		require([
+			"dojo/parser",
+			"dojo/_base/array",
+			"dijit/registry",
+			"dojox/data/FlickrRestStore",
+			"dijit/layout/ContentPane",
+			"dijit/layout/TabContainer",
+			"dojox/image/Gallery",
+			"dojo/domReady!"
+		], function(
+			parser,
+			arrayUtil,
+			registry,
+			FlickrRestStore
+		){
+			parser.parse();
+			var flickrRestStore = new FlickrRestStore();
+			var req = {
+				query: {
+					userid: "44153025@N00",
+					apikey: "8c6803164dbc395fb7131c9d54843627",
+					sort: [
+						{
+							attribute: "interestingness",
+							descending: true
+						}
+					],
+					tag_mode: "any"
+				},
+				count: 20
+			};
+
+			arrayUtil.forEach(["gallery1", "gallery2", "gallery3"], function(galleryId){
+				registry.byId(galleryId).setDataStore(flickrRestStore, req, {
+				  imageThumbAttr: "imageUrlThumb",
+				  imageLargeAttr: "imageUrl",
+				  titleAttr: "title"
+
+				});
+			});
+		});
+	</script>
 </body>
 </html>

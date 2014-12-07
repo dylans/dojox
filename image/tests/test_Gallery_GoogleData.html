@@ -35,8 +35,8 @@
 			"dojo/dom",
 			"dojo/on",
 			"dijit/registry",
-			"dojox/image/Gallery",
 			"dojox/data/FlickrRestStore",
+			"dojox/image/Gallery",
 			"dojo/domReady!"
 		], function(
 			parser,
@@ -44,7 +44,6 @@
 			dom,
 			on,
 			registry,
-			Gallery,
 			FlickrRestStore
 		){
 			parser.parse();
@@ -56,10 +55,10 @@
 				},
 				count: 32
 			};
-			// testCommon defers parsing by a little, so dijit's aren't ready
+			// testCommon defers parsing by a little, so Dijit's aren't ready
 			// in addOnLoad for soria/nihilo :(
 			setTimeout(function(){
-				registry.byId('gallery1').setDataStore(googleImageStore, req);
+				registry.byId("gallery1").setDataStore(googleImageStore, req);
 			},250);
 
 			function changeStore(){
@@ -78,7 +77,7 @@
 					},
 					count: 20
 				};
-				registry.byId('gallery1').setDataStore(flickrRestStore, req, {
+				registry.byId("gallery1").setDataStore(flickrRestStore, req, {
 				  imageThumbAttr: "imageUrlThumb",
 				  imageLargeAttr: "imageUrl",
 				  titleAttr: "title"
